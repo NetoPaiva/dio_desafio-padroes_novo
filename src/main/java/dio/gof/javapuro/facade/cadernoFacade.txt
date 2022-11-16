@@ -1,0 +1,244 @@
+Caderno, anotações de aula
+
+    @author NetoPaiva
+
+Padrão de Projeto Facede
+
+    Interface
+        — simplificar integração entre subsistemas
+        — abstrair toda a complexidade de deiversos sistemas
+        — consumir informação de forma coesa
+
+    Padrão controverso
+        — classificam como "antipattern"
+        — quebra princípios dos sólidos
+            — conforme implementação
+
+    API é semelhante ao Facade
+        — interface simples
+        — consumir conteúdo
+
+Construindo o padrão Facade
+
+    Conceito
+        interface que realiza operações para
+        consolidar ou expor uma interface mais simples
+        para operação que é mais complexa
+
+        — criar um pequeno problema
+          para solucionar com Facade
+            — base de clientes
+            — migrar clientes para nova basae
+            — ou incrementar base atual
+
+            — únicos dados da base de clientes
+                — nome
+                — CEP
+
+        - objetivo
+            — consumir api de CEP
+            — para consolidar todos os dados do endereço
+                — logradouro
+                — complemento
+                — cidade
+                — estado
+                — cep
+
+    Criar Classe Facade.java
+        — no pacote Facade
+
+    Implementar a interface de uso
+
+        Criar método para migrar clientes
+            public void migrarCliente() {}
+
+        Incluir parâmentro do método de migração
+            — os dois atributos da base de clientes
+                — nome
+                — cep
+
+            (String nome, String cep)
+
+
+Criar integração com os subsistemas externos
+
+    Criar pacotes dentro de "src"
+        "subsistema1.crm"
+        "subsistema2.cep"
+
+
+Criar Classes para implementações de padrõpes diferentes
+
+    Criar Classe de serviço CRM
+        dentro de subsistema1.crm
+        new / Java Class / CrmService
+            — será a cama de serviço do CRM
+
+        Criar construtor privado
+            — por questão de "boa prática"
+                quem for consumir
+                sempre terá que consumir os métodos estáticos
+                não precisa instanciar a classe sem necessidade
+                    classe não tem estrutura nenhuma:
+                        atributos
+                        métodos de instância
+                    tem apenas método de Classe
+                        método estático
+            — atalho (alt + insert / construtor)
+                cria construtor públçico
+                alterar para privado
+                    private CrmService() {
+                        super();
+                    }
+
+        Criar método estático para armazenar dados do cliente
+            public static void gravarCliente() {}
+
+        Definir parâmetro do método será nome do cliente
+            gravarCliente(String nome)
+
+        Definir parâmentros adicionais do método gravarCliente
+            cep
+            cidade
+            estado
+                gravarCliente(String nome, String cep, String estado)
+
+        Visualizar saída do método
+            System.out.println("Cliente salvo no sistema de CRM.");
+
+--------------------------------------------------------------------
+Recapitulando — Primeira integração
+    Interface com método estático
+    Quem irá consumir não precisará instanciar a Classe CrmSrvice
+--------------------------------------------------------------------
+
+    Criar classe da API de CEP
+        dentro de subsistema2
+            new / Java Class / CepApi
+
+        Implementar o método Singleton
+            semelhante ao "SingletonEager"
+                - por ser mais simples
+
+            private static CepApi instancia = new CepApi();
+            private CepApi(){
+                super();
+            }
+            public static CepApi getInstancia() {
+                return instancia;
+            }
+
+        Implementar métodos de instâncias públicos
+            quem irá usar
+                vai pegar a instância
+                e terá acesso aos métodos de instância público
+
+            Método recuperar cidade pelo CEP
+                do tipo String (retorna texto)
+                    public String recuperarCidade() {}
+                parâmentro do mmétodo
+                    (String cep)
+                retorno do método com dado "mocadp"
+                    return "Aracaju";
+
+            Método recuperar estado pelo CEP
+                semelhante ao recuperar cidade
+                    public String recuperarEstado(String cep) {
+                        return "SE";
+                    }
+
+--------------------------------------------------------------------
+Recapitulando
+    Os dois subsistemas tem interfaces de uso bem diferentes
+    Alguma com quantidade grande de parâmentros
+    Consumir diretamente pode ser uma tarefa muito complexa
+
+    Motivo para utilizar Facade
+        Criar interface mais simples para consumo das informações
+        A partir de Nome e CEP
+            Obter o restante dos dados necessários
+            para consumir CrmService
+                gravar cliente necessita de muitas instruções
+                    public void migrarCliente(String nome, String cep){
+                        CrmService.gravarCliente(nome, cep, cidade, estado)
+                    }
+                e algumas informações faltam no banco de dados
+                    como cidade / estado
+--------------------------------------------------------------------
+
+Integrar subsistemas na Classe Facade
+
+    Subsistema CepApi
+        para obter o restante dos dados A partir do CEP
+
+    Subsistema CRM Service
+        para armazenar em novo banco de dados
+
+    Cria método de integração para armazenar em novo bando de dados
+        com o subsistema CRM Service
+            public void migrarCliente(String nome, String cep){
+                CrmService.gravarCliente(nome, cep, cidade, estado);
+                }
+            }
+
+        Dá erro em "cidade" e "estado"
+            Só tem variáveis para armazenar nome e CEP
+            Não tem para cidade e estado
+
+        Primeiro, recuperar dados com CepApi
+        e depois armazenar em novas variáveis
+
+    Criar método de integração para recuperar cidade pelo CEP
+        public void migrarCliente(String nome, String cep){
+            CepApi.getInstancia().recuperarCidade(cep);
+        }
+
+        Com a cidade recuperada
+        Precisa armazenar em nova variável
+
+    Criar variável para armazenar a cidade recuperada pelo CEP
+            String cidade = CepApi.getInstancia().recuperarCidade(cep);
+
+    Criar método para recuperar estado
+        semelhante ao método de recuperar cidade
+            String estado = CepApi.getInstancia().recuperarEstado(cep);
+
+   Organizar a orde de saída das informações em sequência
+        na classe CRM Service
+            criar println para cada informação
+                System.out.println("Cliente salvo no sistema de CRM: ");
+                System.out.println(nome);
+                System.out.println(cep);
+                System.out.println(cidade);
+                System.out.println(estado);
+
+--------------------------------------------------------------------
+Recapitulando
+    Facade criou interface mais simples
+    para recuperar e migrar dados
+    de maneira mais adequada / coesa
+--------------------------------------------------------------------
+
+Visualizar resultado da Interface Facade
+
+    Arquivo TesteFacade
+        criar exmplos de funcionamento
+
+    Criar instância nova do Facade
+        Facade facade = new Facade();
+
+        Resultado do teste
+
+            Cliente salvo no sistema de CRM:
+            Margarida
+            49035-020
+            Aracaju
+            SE
+
+            Process finished with exit code 0
+
+--------------------------------------------------------------------
+Recapitulando
+    Facade abstraiu compexidade de integração com subsitemas
+    Com interface mais simples de uso / execução
+--------------------------------------------------------------------
