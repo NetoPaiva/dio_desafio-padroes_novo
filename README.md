@@ -4,7 +4,8 @@ Desafio de Projeto
 
 ### Bootcamp Java Beginners - iFood / DIO
 
-repositório: NetoPaiva/dio_java-beginners_desafio_padroes-projeto
+repositório:
+NetoPaiva/dio_desafio-padroes_novo
 
 --------------------------
 

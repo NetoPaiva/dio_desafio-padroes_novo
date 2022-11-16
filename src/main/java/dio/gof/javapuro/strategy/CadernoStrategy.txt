@@ -1,0 +1,119 @@
+Anotações de aula
+
+@author NetoPaiva
+
+
+Strategy
+    padrão comportamental
+        simplificar a variação de algoritmos a partir de uma mesma interface
+        implementando mais de uma estratégia
+
+
+Projeto
+    simular o comportamento de um robô explorador
+
+
+    Robô
+        contexto: explorador
+        possui estratégias de movimentação
+            interface de comportamento
+                movimento é obrigatório
+                método mover
+                    - agressivo
+                    - normal
+                    - defensivo
+
+
+    A interface que define a estratégia
+        - chama-se Comportamento
+        - tem a ação de se mover
+
+
+    Criar Interface Comportamento
+        new / Java Class / interface / Comportamento
+        criar método mover
+            void mover();
+
+
+    Criar implementações da interface
+
+        new / Java Class / ComportamentoNormal
+
+        3 Implementações de uma mesma estratégia
+
+            classe ComportamentoNormal
+            classe ComportamentoDefensivo
+            classe Comportamentoagressivo
+
+        Na Classe ComportamentoNormal
+
+            implementar interface de comportamento
+            que define a estratégia
+                - garante que o método mover
+                  será implementado obrigatoriamente
+
+                public class ComportamentoNormal
+                    implements Comportamento {}
+
+            implementar o método mover
+                @Override
+                public void mover(){}
+
+            visualizar o resultado do método
+                System.out.println("movimento normal");
+
+        Nas Classes Defensivo / Agressivo
+
+            criar variações do movimento
+                alterar visualização do resultado
+                    "movimento defensivo"
+                    "movimento agressivo"
+
+
+    Criar contexto - o robô
+        new / Java Class / Robo
+
+        Comportamento do Robô
+            estratégia de comportamento
+                private Comportamento comportamento;
+
+            mudanças de estratégia
+                método Set (alt+insert / Setter)
+                    public void setComportamento(Comportamento comportamento) {
+                        this.comportamento = comportamento;
+
+        Criar movimento do Robô
+            - delegar responsabilidade movimentação para a estratégia
+                - pega o comportamento atribuído ao robô
+                - e faz se mover
+                    public void mover(){
+                        comportamento.mover();
+                    }
+    Estratégia está implementada
+
+
+    Teste - funcionamento na prática
+
+        Criar comportamentos no arquivo de teste (Main)
+
+            uma instância para cada tipo de comportamento
+
+                Comportamento normal = new ComportamentoNormal();
+                Comportamento desensivo = new ComportamentoDefensivo();
+                Comportamento agressivo = new ComportamentoAgressivo();
+
+        Criar o Robô
+            uma nova instância
+                Robo robo = new Robo();
+
+        Definir comportamento para o Robô
+            comportamento padrão
+                - normal
+                robo.setComportamento(normal);
+
+        Realizar ação mover
+            robo.mover();
+
+            - movimentar 2 vezes
+                robo.mover();
+                robo.mover();
