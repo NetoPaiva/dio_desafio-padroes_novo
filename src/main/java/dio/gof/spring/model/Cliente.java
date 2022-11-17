@@ -42,4 +42,7 @@ public class Cliente {
     public void setEnderco(Endereco enderco) {
         this.enderco = enderco;
     }
+
+    public void setEndereco(Endereco endereco) {
+    }
 }
