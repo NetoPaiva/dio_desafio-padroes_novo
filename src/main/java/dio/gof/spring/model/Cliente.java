@@ -23,8 +23,7 @@ public class Cliente {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long id) { this.id = id;
     }
 
     public String getNome() {
@@ -39,10 +38,6 @@ public class Cliente {
         return enderco;
     }
 
-    public void setEnderco(Endereco enderco) {
-        this.enderco = enderco;
-    }
-
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(Endereco endereco) { this.enderco = endereco;
     }
 }
