@@ -71,8 +71,8 @@ NetoPaiva/dio_desafio-padroes_novo
     - Spring Data JPA (H2)
     - ViaCEP (Feign)
 
-
-
 ----------
-em andamento ...
+Projetos finalizados
+
+Aplicações rodando!!!
 
