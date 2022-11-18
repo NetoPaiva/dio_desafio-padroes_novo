@@ -60,7 +60,7 @@ NetoPaiva/dio_desafio-padroes_novo
 
 - Strategy (padrão comportamental)
   - implementação direta / indireta do padrão
-  - utilizando anotações na cama de serviço
+  - utilizando anotações na camada de serviço
     - @service
     - @Repository
 
