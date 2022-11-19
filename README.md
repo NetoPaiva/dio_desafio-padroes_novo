@@ -76,3 +76,14 @@ Projetos finalizados
 
 Aplicações rodando!!!
 
+-------
+
+E toda conquista merece uma celebração...
+
+[![Santana - Day of Celebration](https://img.youtube.com/vi/biQUjE6GXCg/0.jpg)](https://youtu.be/biQUjE6GXCg)
+
+
+Aperte o play: [Santana - Day of Celebration - Live in Montreux / 2004](https://youtu.be/biQUjE6GXCg)
+
+
+
